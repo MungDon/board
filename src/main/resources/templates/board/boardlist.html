@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>게시글 목록</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+	<script>
+		$(function(){	
+			
+			$(".add_btn").click(function(){
+				const member_sid=$(".member_sid").val();
+				if(member_sid==null || member_sid==''){
+					alert("로그인이 필요합니다");
+					location.href = "/member/login";
+					return;
+				}
+				location.href = "/board/add";
+			});
+			
+			$(".logout").click(function(){
+				
+				
+					$.ajax({
+				type: 'delete',
+				url: '/member/logout',
+				success: function () {
+					alert("로그아웃");
+					location.reload();
+				}, error: function () {
+				}
+			})
+			});
+			
+		})
+		
+		
+	</script>
+<body>
+	<div class="list_container">
+		<header></header>
+		<table class="table table-striped table-hover">
+			<input type="hidden" th:value="${session.member_sid}" class="member_sid">
+			<thead>
+				<tr>
+					<th scope="col">번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">등록일</th>
+					<th scope="col">조회</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${!#lists.isEmpty(board)}" th:each="list:${board}">
+					<td th:text="${list.board_sid}"></td>
+					<td><a th:href="|/board/detail/${list.board_sid}|" th:text="${list.title}"></a></td>
+					<td th:text="${list.writer}"></td>
+					<td th:text="${#temporals.format(list.created_date, 'yyyy-MM-dd HH:mm')}"></td>
+					<td th:text="${list.view_cnt}"></td>
+				</tr>
+				
+				<tr th:if="${#lists.isEmpty(board)}">
+					<div class="no_list">글이 존재하지 않아요</div>
+				</tr>
+			</tbody>
+		</table>
+		<div class="add_btn_box">
+			<button type="button" class="add_btn">글쓰기</button>
+			<button type="button" class="logout">로그아웃</button>
+		</div>
+		
+	</div>
+
+</html>

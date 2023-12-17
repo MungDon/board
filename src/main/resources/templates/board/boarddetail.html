@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>상세페이지</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+
+	<div class="detail_con">
+		<section>
+			<table>
+				<tbody>
+					<tr>
+						<th scope="row">글 유형</th>
+						<td th:text="${detail.notice_yn == false ? '일반' : '공지'}"></td>
+
+						<th scope="row">등록일</th>
+						<td th:text="${#temporals.format(detail.created_date, 'yyyy-MM-dd HH:mm' ) }"></td>
+					</tr>
+					<tr>
+						<th scope="row">제목</th>
+						<td th:text="${detail.title}"></td>
+
+						<th scope="row">조회수</th>
+						<td th:text="${detail.view_cnt}"></td>
+					</tr>
+					<tr>
+						<th scope="row">이름</th>
+						<td th:text="${detail.writer}"></td>
+					</tr>
+					<tr>
+						<th scope="row">내용</th>
+						<td th:text="${detail.content}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="update_btn_box">
+				<a th:href="|/board/update/${detail.board_sid}|" class="update_btn">수정</a>
+				<button type="button" onclick="deleteBoard();" class="delete_btn">삭제</button>
+				<a th:href="@{/board}" class="back_btn2">뒤로</a>
+			</div>
+		</section>
+	</div>
+
+
+
+	<script th:inline="javascript">
+		function deleteBoard() {
+			const id = /*[[${detail.board_sid} ]]*/"";
+
+			if (!confirm(id + '번 게시글을 삭제할까요?')) {
+				return false;
+			}
+			$.ajax({
+				type: 'delete',
+				url: '/board/delete',
+				data: {
+					id:id
+				},
+				success: function () {
+					    location.href="/board";
+				}, error: function (request, status, error) {
+				}
+			})
+
+		}
+
+	</script>
+</body>
+
+</html>

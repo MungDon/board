@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>수정페이지</title>
+</head>
+
+<body>
+	<form class="boardadd_upd" th:action="|/board/update|" th:method="PUT">
+		<input type="hidden" name="board_sid" th:value="${update.board_sid}">
+		<p>제목<input type="text" name="title" placeholder="제목을 입력해주세요" th:value="${update.title}"></p>
+		 내용<textarea name="content" placeholder="내용을 입력해주세요" th:text="${update.content}"></textarea>
+		<select name="notice_yn">
+			<option value="true" th:selected="${update.notice_yn==true}">공지</option>
+			<option value="false" th:selected="${update.notice_yn==false}">일반글</option>
+		</select>
+		<input type="submit">
+	</form>
+
+</body>
+
+</html>

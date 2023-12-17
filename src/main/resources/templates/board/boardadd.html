@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>글 작성페이지</title>
+</head>
+
+<body>
+	<form class="boardadd" action="/board/add" method="post">
+		<p>제목<input type="text" name="title" placeholder="제목을 입력해주세요"></p>
+		 내용<textarea name="content" placeholder="내용을 입력해주세요" ></textarea>
+		<select name="notice_yn">
+			<option value="true">공지</option>
+			<option value="false">일반글</option>
+		</select>
+		<input type="submit">
+	</form>
+	<div class="back_btn1_box">
+		<a th:href="@{/board}">목록보기</a>
+	</div>
+
+</body>
+
+</html>
