@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class BoardRes {
 	private Long board_sid;
+	private Long member_sid;
 	private String title;
 	private String content;
 	private String writer;

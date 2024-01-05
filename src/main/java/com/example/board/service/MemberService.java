@@ -33,7 +33,6 @@ public class MemberService {
 
 	public MemberRes memberlogin(MemberRegReq params) throws Exception {
 		MemberRes res = memberMapper.findByEmailPwd(params);
-		System.out.println(res);
 		if(res == null ) {
 			throw new Exception("병신");
 		}	

@@ -39,7 +39,6 @@
 	</script>
 <body>
 	<div class="list_container">
-		<header></header>
 		<table class="table table-striped table-hover">
 			<input type="hidden" th:value="${session.member_sid}" class="member_sid">
 			<thead>
@@ -68,6 +67,7 @@
 		<div class="add_btn_box">
 			<button type="button" class="add_btn">글쓰기</button>
 			<button type="button" class="logout">로그아웃</button>
+			<a th:href ="|/member/login|">로그인</a>
 		</div>
 		
 	</div>

@@ -37,11 +37,13 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="update_btn_box">
+			<input type="hidden" value="${detail.member_sid}" name="member_sid">
+			<div class="update_btn_box" th:if = "${session.member_sid == detail.member_sid}">
 				<a th:href="|/board/update/${detail.board_sid}|" class="update_btn">수정</a>
-				<button type="button" onclick="deleteBoard();" class="delete_btn">삭제</button>
-				<a th:href="@{/board}" class="back_btn2">뒤로</a>
-			</div>
+				<button  type="button" onclick="deleteBoard();" class="delete_btn">삭제</button>
+				</div>
+			
+			<a th:href="@{/board}" class="back_btn2">뒤로</a>
 		</section>
 	</div>
 
@@ -67,6 +69,9 @@
 			})
 
 		}
+		
+			
+
 
 	</script>
 </body>
