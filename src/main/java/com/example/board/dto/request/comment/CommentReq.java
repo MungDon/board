@@ -11,6 +11,10 @@ public class CommentReq {
 		private Long comment_sid; // 댓글 번호 PK
 		private Long board_sid; // 게시글 번호 FK
 		private String content; // 댓글 내용
+<<<<<<< HEAD
 		private Long member_sid; // 작성자
+=======
+		private String writer; // 작성자
+>>>>>>> cb6f619 (test1)
 
 }

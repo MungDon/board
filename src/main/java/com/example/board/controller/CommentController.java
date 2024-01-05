@@ -1,5 +1,6 @@
  package com.example.board.controller;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +18,17 @@ import com.example.board.service.CommentService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+=======
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.board.service.CommentService;
+
+>>>>>>> cb6f619 (test1)
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+<<<<<<< HEAD
 @RequestMapping("/board/comment")
 public class CommentController {
 
@@ -56,5 +64,12 @@ public class CommentController {
 		return "삭제완료";
 	}
 	
+=======
+public class CommentController {
+
+	private final CommentService commentService;
+
+
+>>>>>>> cb6f619 (test1)
 	
 }
