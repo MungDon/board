@@ -46,10 +46,52 @@
 			<a th:href="@{/board}" class="back_btn2">뒤로</a>
 		</section>
 	</div>
+	
+	 	<div class="comment">
+				<fieldset>
+					<legend class="c_info">댓글 입력</legend>
+					<div class="c_input">
+						<p><textarea id = "content" name = "content" ></textarea></p>
+						<span><button type="button" class="btn" onclick="saveComment();">등록</button></span>
+					</div>
+				</fieldset>
+		 </div>
+	 	<div class = "comment_list">
+			 
+		 </div>
+	 	
+			 
 
 
 
-	<script th:inline="javascript">
+<script th:inline = "javascript">
+	$(function (){
+		commentList();
+		
+				$(".m_btn").click(function(){
+					const m_id = $("#m_content")
+					if(m_id != null){
+						m_id.remove();
+						
+					}
+				const area = $(this).val();
+				const text = $(".c_text_"+ area).text();
+				console.log(text);
+					let html = ""
+			html +=`
+			
+			<textarea id = "m_content">${text}</textarea>
+			
+			`;
+			$("#"+area).append(html);
+			
+			
+		
+		});
+					
+
+		
+		});
 		function deleteBoard() {
 			const id = /*[[${detail.board_sid} ]]*/"";
 
@@ -63,12 +105,80 @@
 					id:id
 				},
 				success: function () {
+					
 					    location.href="/board";
 				}, error: function (request, status, error) {
 				}
 			})
 
 		}
+	function saveComment(){
+		const memberSid = /*[[${session.member_sid}]]*/"";
+		if(memberSid == null){
+			alert('로그인 쳐하세요');		
+		}
+		
+			
+			const content = document.getElementById('content');
+			
+			const boardId =/*[[${detail.board_sid} ]]*/"";
+			const params = {
+				board_sid : boardId,
+				content : content.value,
+			}
+			
+		$.ajax({
+				type: 'post',
+				url: '/board/comment',
+				data: params,
+				async : false,
+				success: function () {
+					
+					    alert('댓글 성공ㅋ');
+					    commentList();
+				}, error: function (request, status, error) {
+				}
+			})
+		}
+	
+		function commentList(){
+			const board_sid = /*[[${detail.board_sid} ]]*/"";
+				$.ajax({
+				type: 'get',
+				url: '/board/comment/list/'+ board_sid,
+				async : false,
+				success: function (board) {
+					let html = "";
+					
+						$(board).each(function(index, list){
+							html +=`
+							 <div class = "c_content" id = "${list.comment_sid}">
+								 <div class = "comment_top">
+								 	<span class = "c_writer">작성자 : ${list.writer}</span>
+								 	<span class = "c_date">작성날짜 : ${list.created_date}</span>
+							 	</div>
+							 	<div class ="commemt_center">
+									 <span class = "c_text_${list.comment_sid}" >${list.content}</span>
+								 </div>
+								 <div class = "m_input">
+									 
+									 </div>
+								 <div class ="modified_btn_box">
+										<button type = "button" class ="m_btn" value = "${list.comment_sid}">수정</button>  
+								 </div>
+								 
+									 
+							</div>
+						`;
+						 
+					})
+					$(".comment_list").html(html);
+					    
+				}, error: function (request, status, error) {
+				}
+			})
+		}
+
 		
 			
 

@@ -12,5 +12,5 @@ public class CommentRes {
 	private String writer; // 작성자
 	private String delete_yn; // 댓글 삭제 여부
 	private LocalDateTime created_date; // 댓글 생성 일시
-	private LocalDateTime moidfied_date; // 댓글 수정 일시
+	private LocalDateTime modified_date; // 댓글 수정 일시
 }
