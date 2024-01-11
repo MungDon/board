@@ -81,13 +81,17 @@
 			html +=`
 			
 			<textarea id = "m_content">${text}</textarea>
-			
+			<button type ="button" class ="modify_btn" value = ${text}>수정완료</button>
 			`;
 			$("#"+area).append(html);
 			
 			
 		
-		});
+		}); 
+			$(document).on('click', 'modify_btn', function(){
+				
+				
+			});
 				$(".d_btn").click(function(){
 					let d_id = $(this).val();
 					console.log("체크");
