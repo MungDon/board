@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<<<<<<< HEAD
 <mapper namespace="com.example.board.mapper.CommentMapper">
-=======
-<mapper namespace="mapper.commentmapper">
->>>>>>> cb6f619 (test1)
 
 <!-- 댓글 저장 -->
  <insert id = "save" parameterType="CommentReq" useGeneratedKeys="true" keyColumn="" keyProperty="">
@@ -28,13 +24,10 @@
 <!-- 댓글 목록-->
 <select id="findAll" resultType="CommentRes">
 	SELECT  		TC.*,
-<<<<<<< HEAD
 	TM.nick_name  							AS	writer
 	FROM tb_comment						AS 	TC
-=======
 	TM.nick_name  AS		writer
 	FROM tb_comment		AS 	TC
->>>>>>> cb6f619 (test1)
 	LEFT OUTER JOIN	tb_member	AS	TM
 	ON	TC.member_sid = TM.member_sid	
 	WHERE
@@ -47,13 +40,10 @@
 <!-- 댓글 상세 조회 -->
 <select id="findById" parameterType="Long" resultType="CommentRes">
 	SELECT  		TC.*,
-<<<<<<< HEAD
 	TM.nick_name  							AS	writer
 	FROM tb_comment						AS 	TC
-=======
 	TM.nick_name  AS		writer
 	FROM tb_comment		AS 	TC
->>>>>>> cb6f619 (test1)
 	LEFT OUTER JOIN	tb_member	AS	TM
 	ON	TC.member_sid = TM.member_sid	
 	WHERE

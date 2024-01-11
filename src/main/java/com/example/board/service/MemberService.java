@@ -34,7 +34,7 @@ public class MemberService {
 	public MemberRes memberlogin(MemberRegReq params) throws Exception {
 		MemberRes res = memberMapper.findByEmailPwd(params);
 		if(res == null ) {
-			throw new Exception("병신");
+			throw new Exception("바보");
 		}	
 		return res;
 	}
