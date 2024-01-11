@@ -65,9 +65,11 @@
 			</tbody>
 		</table>
 		<div class="add_btn_box">
-			<button type="button" class="add_btn">글쓰기</button>
-			<button type="button" class="logout">로그아웃</button>
 			<a th:href ="|/member/login|">로그인</a>
+			<button type="button" class="add_btn">글쓰기</button>
+		</div>
+		<div class="logout_btn_box" th:if ="${session.member_sid != null}">
+			<button type="button" class="logout">로그아웃</button>
 		</div>
 		
 	</div>

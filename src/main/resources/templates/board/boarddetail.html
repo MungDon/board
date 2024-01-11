@@ -88,7 +88,25 @@
 			
 		
 		});
+				$(".d_btn").click(function(){
+					let d_id = $(this).val();
+					console.log("체크");
+						$.ajax({
+				type: 'delete',
+				url: '/board/comment',
+				data: {
+					c_sid : d_id
+				},
+				async : false,
+				success: function () {
 					
+					    location.reload();
+				}, error: function () {
+					alert("삭제 실패 ㅋ!");
+				}
+			});
+					
+				});
 
 		
 		});
@@ -115,7 +133,8 @@
 	function saveComment(){
 		const memberSid = /*[[${session.member_sid}]]*/"";
 		if(memberSid == null){
-			alert('로그인 쳐하세요');		
+			alert('로그인 쳐하세요');	
+			location.href = "/member/login";	
 		}
 		
 			
@@ -163,8 +182,9 @@
 								 <div class = "m_input">
 									 
 									 </div>
-								 <div class ="modified_btn_box">
-										<button type = "button" class ="m_btn" value = "${list.comment_sid}">수정</button>  
+								 <div class ="btns_box">
+										<button type = "button" class ="m_btn" value = "${list.comment_sid}">수정하기</button>  
+										<button type = "button" class = "d_btn" value = "${list.comment_sid}">삭제</button>
 								 </div>
 								 
 									 
