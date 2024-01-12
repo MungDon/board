@@ -68,7 +68,7 @@
 	$(function (){
 		commentList();
 		
-				$(".m_btn").click(function(){
+				$(document).on("click",".m_btn", function(){
 					const m_id = $("#m_content")
 					if(m_id != null){
 						m_id.remove();
@@ -80,8 +80,9 @@
 					let html = ""
 			html +=`
 			
-			<textarea id = "m_content">${text}</textarea>
+			<textarea id = "m_content" class = "m_text_${m_id}"> ${text}</textarea>
 			<button type ="button" class ="modify_btn" value = ${text}>수정완료</button>
+			
 			`;
 			$("#"+area).append(html);
 			
@@ -89,10 +90,25 @@
 		
 		}); 
 			$(document).on('click', 'modify_btn', function(){
-				
+				const m_id = $(this).val();
+				const m_content = $(".m_text_" + m_id).val();
+			$.ajax({
+				type: 'put',
+				url: '/board/comment/delete',
+				data: {
+					m_id : m_id,
+					text	: m_content
+				},
+				success: function () {
+					
+						alert("댓글 수정 완료!")
+					    location.reload();
+				}, error: function (request, status, error) {
+				}
+			})
 				
 			});
-				$(".d_btn").click(function(){
+				$(document).on( "click",".d_btn", function(){
 					let d_id = $(this).val();
 					console.log("체크");
 						$.ajax({

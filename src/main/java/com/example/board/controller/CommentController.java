@@ -43,7 +43,7 @@ public class CommentController {
 		List<CommentRes> list = commentService.commentList(b_sid);
 		return list;
 	}
-
+	//댓글 수정 
 	@PutMapping("/update")
 	public Long updateComment(CommentReq prarams, Long c_sid) {
 		commentService.updateComment(prarams);

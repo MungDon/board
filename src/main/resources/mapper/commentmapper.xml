@@ -24,12 +24,10 @@
 <!-- 댓글 목록-->
 <select id="findAll" resultType="CommentRes">
 	SELECT  		TC.*,
-	TM.nick_name  							AS	writer
-	FROM tb_comment						AS 	TC
-	TM.nick_name  AS		writer
+	TM.nick_name 			AS	writer
 	FROM tb_comment		AS 	TC
 	LEFT OUTER JOIN	tb_member	AS	TM
-	ON	TC.member_sid = TM.member_sid	
+	ON	TC.member_sid = TM.member_sid
 	WHERE
 		TC.delete_yn = 'N'
 		AND board_sid = #{board_sid}
@@ -42,8 +40,6 @@
 	SELECT  		TC.*,
 	TM.nick_name  							AS	writer
 	FROM tb_comment						AS 	TC
-	TM.nick_name  AS		writer
-	FROM tb_comment		AS 	TC
 	LEFT OUTER JOIN	tb_member	AS	TM
 	ON	TC.member_sid = TM.member_sid	
 	WHERE
