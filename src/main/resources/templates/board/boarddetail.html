@@ -69,18 +69,17 @@
 		commentList();
 		
 				$(document).on("click",".m_btn", function(){
-					const m_id = $("#m_content")
+					const m_id = $("#m_content");
 					if(m_id != null){
 						m_id.remove();
 						
 					}
 				const area = $(this).val();
 				const text = $(".c_text_"+ area).text();
-				console.log(text);
 					let html = ""
 			html +=`
 			
-			<textarea id = "m_content" class = "m_text_${m_id}"> ${text}</textarea>
+			<textarea id = "m_content" class ="m_text_${m_id}"> ${text}</textarea>
 			<button type ="button" class ="modify_btn" value = ${text}>수정완료</button>
 			
 			`;
@@ -89,21 +88,23 @@
 			
 		
 		}); 
-			$(document).on('click', 'modify_btn', function(){
+			$(document).on('click', '.modify_btn', function(){
 				const m_id = $(this).val();
 				const m_content = $(".m_text_" + m_id).val();
+				console.log(m_content);
 			$.ajax({
-				type: 'put',
-				url: '/board/comment/delete',
+				type: 'PUT',
+				url: '/board/comment/update',
 				data: {
-					m_id : m_id,
-					text	: m_content
+					params : m_id,
+					m_content	: m_content
 				},
 				success: function () {
 					
 						alert("댓글 수정 완료!")
 					    location.reload();
-				}, error: function (request, status, error) {
+				}, 
+				error: function (request, status, error) {
 				}
 			})
 				
@@ -142,6 +143,7 @@
 				data: {
 					id:id
 				},
+				async : false,
 				success: function () {
 					
 					    location.href="/board";

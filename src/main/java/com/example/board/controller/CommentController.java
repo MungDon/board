@@ -45,9 +45,9 @@ public class CommentController {
 	}
 	//댓글 수정 
 	@PutMapping("/update")
-	public Long updateComment(CommentReq prarams, Long c_sid) {
+	public CommentRes updateComment(CommentReq prarams, Long c_sid) {
 		commentService.updateComment(prarams);
-		return commentService.deleteComment(c_sid);
+		return commentService.detailComment(c_sid);
 
 	}
 
