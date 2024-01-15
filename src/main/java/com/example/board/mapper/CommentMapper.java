@@ -19,12 +19,13 @@ public interface CommentMapper {
 	CommentRes findById(Long c_sid);
 	
 	/*댓글 수정*/
-	void update(CommentReq params);
+	void update(CommentReq prarams);
 	
 	/*댓글 삭제*/
 	void deleteById(Long c_sid);
 	
 	/*댓글 카운트 수 */
 	int count(Long b_sid);
+
 	
 }

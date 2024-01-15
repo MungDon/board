@@ -36,16 +36,16 @@ public class CommentService {
 		
 	/*댓글 수정*/
 	@Transactional
-	public Long updateComment(final CommentReq params) {
-		commentMapper.update(params);
-		return params.getComment_sid();
+	public Long updateComment(final CommentReq prarams) {
+		commentMapper.update(prarams);
+		return prarams.getComment_sid();
 	}
 	
 	/*댓글 삭제*/
 	@Transactional
-	public Long deleteComment(final Long c_sid) {
-		commentMapper.deleteById(c_sid);
-		return c_sid; 
+	public Long deleteComment(final Long comment_sid) {
+		commentMapper.deleteById(comment_sid);
+		return comment_sid; 
 	}
 	
 	

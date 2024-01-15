@@ -69,35 +69,35 @@
 		commentList();
 		
 				$(document).on("click",".m_btn", function(){
-					const m_id = $("#m_content");
-					if(m_id != null){
-						m_id.remove();
+					const content = $("#m_content");
+					if(content != null){
+						content.remove();
 						
 					}
-				const area = $(this).val();
-				const text = $(".c_text_"+ area).text();
+				const comment_sid = $(this).val();
+				const text = $(".c_text_"+ comment_sid).text();
 					let html = ""
 			html +=`
 			
-			<textarea id = "m_content" class ="m_text_${m_id}"> ${text}</textarea>
-			<button type ="button" class ="modify_btn" value = ${text}>수정완료</button>
+			<textarea id = "m_content" class ="m_text_${comment_sid}"> ${text}</textarea>
+			<button type ="button" class ="modify_btn" value = ${comment_sid}>수정완료</button>
 			
 			`;
-			$("#"+area).append(html);
+			$("#"+comment_sid).append(html);
 			
 			
 		
 		}); 
 			$(document).on('click', '.modify_btn', function(){
-				const m_id = $(this).val();
-				const m_content = $(".m_text_" + m_id).val();
+				const comment_sid = $(this).val();
+				const content = $(".m_text_" + comment_sid).val();
 				console.log(m_content);
 			$.ajax({
 				type: 'PUT',
 				url: '/board/comment/update',
 				data: {
-					params : m_id,
-					m_content	: m_content
+					params : comment_sid,
+					params: content,
 				},
 				success: function () {
 					
@@ -110,13 +110,13 @@
 				
 			});
 				$(document).on( "click",".d_btn", function(){
-					let d_id = $(this).val();
+					let comment_sid = $(this).val();
 					console.log("체크");
 						$.ajax({
 				type: 'delete',
 				url: '/board/comment',
 				data: {
-					c_sid : d_id
+					comment_sid : comment_sid
 				},
 				async : false,
 				success: function () {
@@ -154,8 +154,8 @@
 		}
 
 	function saveComment(){
-		const memberSid = /*[[${session.member_sid}]]*/"";
-		if(memberSid == null){
+		const member_sid = /*[[${session.member_sid}]]*/"";
+		if(member_sid == null){
 			alert('로그인 쳐하세요');	
 			location.href = "/member/login";	
 		}
@@ -163,9 +163,9 @@
 			
 			const content = document.getElementById('content');
 			
-			const boardId =/*[[${detail.board_sid} ]]*/"";
+			const board_sid =/*[[${detail.board_sid} ]]*/"";
 			const params = {
-				board_sid : boardId,
+				board_sid : board_sid,
 				content : content.value,
 			}
 			

@@ -45,16 +45,16 @@ public class CommentController {
 	}
 	//댓글 수정 
 	@PutMapping("/update")
-	public CommentRes updateComment(CommentReq prarams, Long c_sid) {
-		commentService.updateComment(prarams);
-		return commentService.detailComment(c_sid);
+	public Long updateComment(CommentReq prarams) {
+		return	commentService.updateComment(prarams);
+		
 
 	}
 
 	// 댓글 삭제
 	@DeleteMapping("")
-	public String deleteComment(Long c_sid) {
-		commentService.deleteComment(c_sid);
+	public String deleteComment(Long comment_sid) {
+		commentService.deleteComment(comment_sid);
 		return "삭제완료";
 	}
 
