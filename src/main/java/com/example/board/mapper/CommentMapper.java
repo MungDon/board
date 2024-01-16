@@ -5,12 +5,16 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.board.dto.request.comment.CommentReq;
+import com.example.board.dto.request.comment.ReqReplyInsert;
 import com.example.board.dto.response.comment.CommentRes;
 
 @Mapper
 public interface CommentMapper {
 	/*댓글저장*/
 	void save(CommentReq params);
+	
+	/*대댓글저장*/
+	void replySave(ReqReplyInsert params);
 	
 	/*댓글목록*/
 	List<CommentRes> findAll(Long b_sid);

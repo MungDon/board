@@ -65,8 +65,59 @@
 
 
 <script th:inline = "javascript">
+	const board_sid = /*[[${detail.board_sid} ]]*/"";
 	$(function (){
 		commentList();
+		
+		$(document).on("click",".reply_btn", function(){
+				
+				const sec_sid =  $(this).val();
+				const content = $(".r_text_" + sec_sid).val();
+				let first_sid = $(".first_chk_" + sec_sid).val();
+				if(first_sid == null || first_sid =="null"){
+					first_sid = sec_sid;
+				}
+				console.log(first_sid);
+			$.ajax({
+					type: 'POST',
+					url: '/board/comment/reply',
+					data: {
+					board_sid : board_sid,
+						first_sid : first_sid,
+						sec_sid : sec_sid,
+						content : content
+					},
+					success: function () {
+						
+							alert("댓글 작성 완료!")
+						    location.reload();
+					}, 
+					error: function (request, status, error) {
+					}
+				})
+				
+				
+		});
+			
+			$(document).on("click",".r_btn", function(){
+					const content = $("#m_content");
+					if(content != null){
+						content.remove();
+						
+					}
+				const comment_sid = $(this).val();
+				const text = $(".c_text_"+ comment_sid).text();
+					let html = ""
+			html +=`
+			<div  id = "m_content">
+				<textarea id = "m_content" class ="r_text_${comment_sid}"></textarea>
+				<button type ="button" class ="reply_btn" value = ${comment_sid}>댓글작성</button>
+			</div>
+			`;
+			$("#"+comment_sid).append(html);
+			
+			});
+		
 		
 				$(document).on("click",".m_btn", function(){
 					const content = $("#m_content");
@@ -78,10 +129,10 @@
 				const text = $(".c_text_"+ comment_sid).text();
 					let html = ""
 			html +=`
-			
-			<textarea id = "m_content" class ="m_text_${comment_sid}"> ${text}</textarea>
-			<button type ="button" class ="modify_btn" value = ${comment_sid}>수정완료</button>
-			
+			<div  id = "m_content">
+				<textarea class ="m_text_${comment_sid}"> ${text}</textarea>
+				<button type ="button" class ="modify_btn" value = ${comment_sid}>수정완료</button>
+			</div>
 			`;
 			$("#"+comment_sid).append(html);
 			
@@ -91,7 +142,6 @@
 			$(document).on('click', '.modify_btn', function(){
 				const comment_sid = $(this).val();
 				const content = $(".m_text_" + comment_sid).val();
-				console.log(m_content);
 			$.ajax({
 				type: 'PUT',
 				url: '/board/comment/update',
@@ -163,7 +213,6 @@
 			
 			const content = document.getElementById('content');
 			
-			const board_sid =/*[[${detail.board_sid} ]]*/"";
 			const params = {
 				board_sid : board_sid,
 				content : content.value,
@@ -184,12 +233,11 @@
 		}
 	
 		function commentList(){
-			const board_sid = /*[[${detail.board_sid} ]]*/"";
 				$.ajax({
 				type: 'get',
 				url: '/board/comment/list/'+ board_sid,
 				async : false,
-				success: function (board) {
+				success: function (board) {console.log(board);
 					let html = "";
 					
 						$(board).each(function(index, list){
@@ -206,8 +254,13 @@
 									 
 									 </div>
 								 <div class ="btns_box">
+									 
+									 <input type ="hidden" value ="${list.first_sid}" class ="first_chk_${list.comment_sid}">
 										<button type = "button" class ="m_btn" value = "${list.comment_sid}">수정하기</button>  
 										<button type = "button" class = "d_btn" value = "${list.comment_sid}">삭제</button>
+										<button type = "button" class = "r_btn" value = "${list.comment_sid}">리플이요</button>
+										<button type = "button" class = "more_btn" value = "${list.comment_sid}">더보기</button>
+										
 								 </div>
 								 
 									 

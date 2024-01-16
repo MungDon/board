@@ -1,15 +1,15 @@
 package com.example.board.dto.request.comment;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
-public class CommentReq {
-	
-		private Long comment_sid; // 댓글 번호 PK
+@Getter
+@Setter
+public class ReqReplyInsert {
+		private Long first_sid;
+		private Long sec_sid;
+		private Long reply_sid;
 		private Long board_sid; // 게시글 번호 FK
 		private String content; // 댓글 내용
 		private Long member_sid; // 작성자
-
 }

@@ -22,19 +22,20 @@ public class BoardService {
 	// 게시글 저장
 	@Transactional
 	public Long saveBoard(final BoardReq params) {
-
 		boardMapper.save(params);
 		return params.getBoard_sid();
 
 	}
 
 	// 게시글 조회
+	@Transactional(readOnly = true)
 	public List<BoardRes> findAllBoard() {
 		return boardMapper.findAll();
 
 	}
 
 	// 게시글 상세
+	@Transactional(readOnly = true)
 	public BoardRes findBoardById(final Long id) {
 		return boardMapper.findById(id);
 
@@ -43,12 +44,12 @@ public class BoardService {
 	// 게시글 수정
 	@Transactional
 	public Long updateBoard(final BoardReq params) {
-		
 		boardMapper.update(params);
 		return params.getBoard_sid();
 	}
 
 	// 게시글 삭제
+	@Transactional
 	public Long deleteBoard(final Long id) {
 		boardMapper.deleteById(id);
 		return id;

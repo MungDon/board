@@ -3,7 +3,7 @@
 <mapper namespace="com.example.board.mapper.CommentMapper">
 
 <!-- 댓글 저장 -->
- <insert id = "save" parameterType="CommentReq" useGeneratedKeys="true" keyColumn="" keyProperty="">
+ <insert id = "save" parameterType="CommentReq" useGeneratedKeys="true" keyColumn="comment_sid" keyProperty="comment_sid">
  	INSERT INTO tb_comment(
  	board_sid,
  	content,
@@ -21,19 +21,39 @@
  	)
 </insert>
 
+<!-- 대댓글 저장 -->
+ <insert id = "replySave" parameterType="CommentReq" >
+ 	INSERT INTO tb_reply(
+ 	first_sid,
+ 	sec_sid,
+ 	reply_sid
+ 	) VALUES (
+ 	#{first_sid},
+ 	#{sec_sid},
+ 	#{reply_sid}
+ 	)
+</insert>
+
 <!-- 댓글 목록-->
 <select id="findAll" resultType="CommentRes">
-	SELECT  		TC.*,
-	TM.nick_name 			AS	writer
+SELECT  		TC.*,
+	TM.nick_name 			AS	writer,
+	TR.*
 	FROM tb_comment		AS 	TC
-	LEFT OUTER JOIN	tb_member	AS	TM
-	ON	TC.member_sid = TM.member_sid
+	LEFT OUTER JOIN	tb_member	AS	TM	ON	TC.member_sid = TM.member_sid 
+	LEFT OUTER join tb_reply	AS	TR 	ON	TC.comment_sid = TR.first_sid or TC.comment_sid =TR.reply_sid 
 	WHERE
 		TC.delete_yn = 'N'
-		AND board_sid = #{board_sid}
+		AND TC.board_sid = #{board_sid}
+		and (TR.first_sid = TC.comment_sid or TR.reply_sid is NULL)
+		group by TC.comment_sid 
 	ORDER	BY
-		TC.comment_sid DESC
+		TC.comment_sid DESC;
 </select>
+<!-- 대댓글 더보기 -->
+<select id ="more">
+</select>
+
 
 <!-- 댓글 상세 조회 -->
 <select id="findById" parameterType="Long" resultType="CommentRes">
