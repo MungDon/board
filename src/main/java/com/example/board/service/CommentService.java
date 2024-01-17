@@ -25,26 +25,14 @@ public class CommentService {
 		return params.getComment_sid();
 	}
 	
-	/*대댓글 저장*/
-	@Transactional
-	public Long saveReply(final ReqReplyInsert params) {
-		System.out.println(params.getBoard_sid());
-		CommentReq save =  new CommentReq();
-		save.setContent(params.getContent());
-		save.setMember_sid(params.getMember_sid());
-		save.setBoard_sid(params.getBoard_sid());
-		commentMapper.save(save);
-		params.setReply_sid(save.getComment_sid());
-		commentMapper.replySave(params);
-		return params.getReply_sid();
-	}
-	       
 	/*댓글 목록*/
+	@Transactional(readOnly = true)
 	public List<CommentRes> commentList(final Long board_sid){
 		return commentMapper.findAll(board_sid);
 	}
 	
 	/*댓글 상세조회*/
+	@Transactional(readOnly = true)
 	public CommentRes detailComment(final Long comment_sid){
 		return commentMapper.findById(comment_sid);
 	}
@@ -62,6 +50,27 @@ public class CommentService {
 		commentMapper.deleteById(comment_sid);
 		return comment_sid; 
 	}
+
+	/*대댓글 저장*/
+	@Transactional
+	public Long saveReply(final ReqReplyInsert params) {
+		System.out.println(params.getBoard_sid());
+		CommentReq save =  new CommentReq();
+		save.setContent(params.getContent());
+		save.setMember_sid(params.getMember_sid());
+		save.setBoard_sid(params.getBoard_sid());
+		commentMapper.save(save);
+		params.setReply_sid(save.getComment_sid());
+		commentMapper.replySave(params);
+		return params.getReply_sid();
+	}
 	
+	/*대댓글 더보기*/
+	@Transactional(readOnly = true)
+	public List<CommentRes> moreReply(Long first_sid){
+		System.out.println("체크");
+		return commentMapper.more(first_sid);
+	
+	}
 	
 }

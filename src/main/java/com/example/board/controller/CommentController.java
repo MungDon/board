@@ -2,8 +2,6 @@ package com.example.board.controller;
 
 import java.util.List;
 
-import javax.swing.event.ListDataEvent;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +31,7 @@ public class CommentController {
 	@PostMapping("")
 	public CommentRes saveComment(CommentReq params, HttpServletRequest req) {
 		HttpSession session = req.getSession(false);
-		Long m_id = (Long) session.getAttribute("member_sid"); 
+				Long m_id = (Long) session.getAttribute("member_sid"); 
 		params.setMember_sid(m_id);
 		Long c_id = commentService.saveComment(params);
 		return commentService.detailComment(c_id);
@@ -63,10 +61,17 @@ public class CommentController {
 		commentService.saveReply(params);
 		List<CommentRes> list = commentService.commentList(params.getBoard_sid());
 		return list;
-		
-		
 	}
 	
+	//대댓글 더보기
+	@GetMapping("/reply/{first_sid}")
+	public List<CommentRes> moreReply(@PathVariable Long first_sid){
+		System.out.println("체크");
+		List<CommentRes> reply = commentService.moreReply(first_sid);
+		return reply;
+	}
+	
+
 	// 댓글 삭제
 	@DeleteMapping("")
 	public String deleteComment(Long comment_sid) {

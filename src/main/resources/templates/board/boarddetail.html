@@ -9,6 +9,7 @@
 
 <body>
 
+
 	<div class="detail_con">
 		<section>
 			<table>
@@ -232,6 +233,55 @@
 			})
 		}
 	
+		$(document).on("click", ".more_btn", function(){
+			let first_sid = $(this).val();
+			if($(".reply_box_"+first_sid).length > 0 ){
+				$(this).text("더보기");
+				$(".reply_box_"+first_sid).remove();
+				return;
+			}		
+				$(this).text("닫기");
+				
+			
+				$.ajax({
+				type: 'GET',
+				url: '/board/comment/reply/'+first_sid,
+				async : false,
+				success: function (board) {
+					let html = `<div class ="reply_box reply_box_${first_sid}">`;
+					
+						$(board).each(function(index, list){
+							html +=`
+								 <div class = "re_c_content" id = "${list.comment_sid}">
+									 <div class = "comment_top2">
+									 	<span class = "re_c_writer">작성자 : ${list.writer}</span>
+									 	<span class = "re_c_date">작성날짜 : ${list.created_date}</span>
+								 	</div>
+								 	<div class ="commemt_center2">
+										 <span class = "re_c_text_${list.comment_sid}" >${list.content}</span>
+									 </div>
+									 <div class = "m_input">
+										 
+										 </div>
+									 <div class ="btns_box2">
+										 
+										 <input type ="hidden" value ="${list.first_sid}" class ="first_chk_${list.comment_sid}">
+											<button type = "button" class = "d_btn" value = "${list.comment_sid}">삭제</button>
+									 </div>
+									 
+									 
+								</div>
+						`;
+						 
+					})
+					html+=`</div>`;
+					$(".comment_list").after(html);
+					    
+				}, error: function (request, status, error) {
+				}
+			})
+		})
+	
 		function commentList(){
 				$.ajax({
 				type: 'get',
@@ -265,6 +315,8 @@
 								 
 									 
 							</div>
+							
+							
 						`;
 						 
 					})
@@ -274,6 +326,7 @@
 				}
 			})
 		}
+		
 
 
 		
@@ -281,6 +334,13 @@
 
 
 	</script>
+	<style>
+		
+		.reply_box{
+			padding:10px 10px ;
+			margin-left: 40px;
+		}
+		</style>
 </body>
 
 </html>

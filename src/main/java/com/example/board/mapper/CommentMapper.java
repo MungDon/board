@@ -16,11 +16,14 @@ public interface CommentMapper {
 	/*대댓글저장*/
 	void replySave(ReqReplyInsert params);
 	
+	/*대댓글 더보기*/
+	List<CommentRes> more(Long first_sid);
+	
 	/*댓글목록*/
-	List<CommentRes> findAll(Long b_sid);
+	List<CommentRes> findAll(Long board_sid);
 	
 	/*댓글 상세조회*/
-	CommentRes findById(Long c_sid);
+	CommentRes findById(Long comment_sid);
 	
 	/*댓글 수정*/
 	void update(CommentReq prarams);
